@@ -20,6 +20,7 @@
 
         public void colocar_peca(Peca p, Posicao pos)
         {
+            if (existe_peca(pos)) throw new TabuleiroException("Já existe uma peça nesta posição!");
             pecas[pos.linha,pos.coluna] = p;
             p.posicao = pos;
         }

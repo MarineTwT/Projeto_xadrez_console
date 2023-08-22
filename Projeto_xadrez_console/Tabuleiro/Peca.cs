@@ -14,5 +14,11 @@
             this.qteMovimento = 0;
             this.tabuleiro = tabuleiro;
         }
+
+        public void incrementar_movimentos()
+        {
+            qteMovimento++;
+        }
+
     }
 }

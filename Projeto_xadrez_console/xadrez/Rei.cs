@@ -21,35 +21,35 @@ namespace xadrez
             Posicao pos = new Posicao(0,0);
 
             //Acima
-            pos.definir_valores(pos.linha - 1, pos.coluna);
+            pos.definir_valores(posicao.linha - 1, posicao.coluna);
             if (tabuleiro.posicao_valida(pos) && pode_mover(pos)) mat[pos.linha,pos.coluna] = true;
 
             //NE
-            pos.definir_valores(pos.linha - 1, pos.coluna + 1);
+            pos.definir_valores(posicao.linha - 1, posicao.coluna + 1);
             if (tabuleiro.posicao_valida(pos) && pode_mover(pos)) mat[pos.linha, pos.coluna] = true;
 
             //Direita
-            pos.definir_valores(pos.linha , pos.coluna + 1);
+            pos.definir_valores(posicao.linha , posicao.coluna + 1);
             if (tabuleiro.posicao_valida(pos) && pode_mover(pos)) mat[pos.linha, pos.coluna] = true;
 
             //SE
-            pos.definir_valores(pos.linha + 1, pos.coluna + 1);
+            pos.definir_valores(posicao.linha + 1, posicao.coluna + 1);
             if (tabuleiro.posicao_valida(pos) && pode_mover(pos)) mat[pos.linha, pos.coluna] = true;
 
             //Abaixo
-            pos.definir_valores(pos.linha + 1, pos.coluna);
+            pos.definir_valores(posicao.linha + 1, posicao.coluna);
             if (tabuleiro.posicao_valida(pos) && pode_mover(pos)) mat[pos.linha, pos.coluna] = true;
 
             //SU
-            pos.definir_valores(pos.linha + 1, pos.coluna - 1);
+            pos.definir_valores(posicao.linha + 1, posicao.coluna - 1);
             if (tabuleiro.posicao_valida(pos) && pode_mover(pos)) mat[pos.linha, pos.coluna] = true;
 
             //Esquerda
-            pos.definir_valores(pos.linha, pos.coluna - 1);
+            pos.definir_valores(posicao.linha, posicao.coluna - 1);
             if (tabuleiro.posicao_valida(pos) && pode_mover(pos)) mat[pos.linha, pos.coluna] = true;
 
             //NO
-            pos.definir_valores(pos.linha - 1, pos.coluna - 1);
+            pos.definir_valores(posicao.linha - 1, posicao.coluna - 1);
             if (tabuleiro.posicao_valida(pos) && pode_mover(pos)) mat[pos.linha, pos.coluna] = true;
 
             return mat;

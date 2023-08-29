@@ -12,13 +12,15 @@ namespace xadrez
             return p == null || p.cor != cor;
         }
 
+        public override string ToString() { return "T"; }
+
         public override bool[,] mov_possivel()
         {
             bool[,] mat = new bool[tabuleiro.linhas, tabuleiro.colunas];
             Posicao pos = new Posicao(0, 0);
 
             //Acima
-            pos.definir_valores(pos.linha - 1, pos.coluna);
+            pos.definir_valores(posicao.linha - 1, posicao.coluna);
             while (tabuleiro.posicao_valida(pos) && pode_mover(pos))
             { 
                 mat[pos.linha, pos.coluna] = true;
@@ -26,8 +28,8 @@ namespace xadrez
                 pos.linha = pos.linha - 1;
             }
 
-            //Direita
-            pos.definir_valores(pos.linha, pos.coluna + 1);
+            //Abaixo
+            pos.definir_valores(posicao.linha + 1, posicao.coluna);
             while (tabuleiro.posicao_valida(pos) && pode_mover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
@@ -35,27 +37,24 @@ namespace xadrez
                 pos.linha = pos.linha + 1;
             }
 
-            //Abaixo
-            pos.definir_valores(pos.linha + 1, pos.coluna);
+            //Direita
+            pos.definir_valores(posicao.linha, posicao.coluna + 1);
             while (tabuleiro.posicao_valida(pos) && pode_mover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
                 if (tabuleiro.peca(pos) != null && tabuleiro.peca(pos).cor != cor) break;
-                pos.linha = pos.linha + 1;
+                pos.coluna = pos.coluna + 1;
             }
 
             //Esquerda
-            pos.definir_valores(pos.linha - 1, pos.coluna - 1);
+            pos.definir_valores(posicao.linha, posicao.coluna - 1);
             while (tabuleiro.posicao_valida(pos) && pode_mover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
                 if (tabuleiro.peca(pos) != null && tabuleiro.peca(pos).cor != cor) break;
-                pos.linha = pos.linha - 1;
-            }
-
-            return mat;
+                pos.coluna = pos.coluna - 1;
+            }         
+                return mat;
         }
-
-        public override string ToString() {return "T";}
     }
 }

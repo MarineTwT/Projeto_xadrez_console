@@ -1,4 +1,5 @@
 ﻿using tabuleiro;
+using System.Collections.Generic;
 
 namespace xadrez
 {
@@ -8,14 +9,18 @@ namespace xadrez
         public int turno { get; private set; }
         public Cor jogadoratual { get; private set; }
         public bool terminada { get; private set; }
+        private HashSet<Peca> pecas;
+        private HashSet<Peca> capturadas;
 
         public PartidaXadrez()
         {
             tabuleiro = new Tabuleiro(8,8);
             turno = 1;
             jogadoratual = Cor.Branco;
-            colocar_pecas();
             terminada = false;
+            pecas = new HashSet<Peca>();
+            capturadas = new HashSet<Peca>();
+            colocar_pecas();
         }
 
         public void executar_movimento(Posicao origem, Posicao destino)
@@ -25,6 +30,8 @@ namespace xadrez
             Peca pecaCapturada = tabuleiro.retirar_peca(destino);
 
             tabuleiro.colocar_peca(p, destino);
+            if(pecaCapturada != null)capturadas.Add(pecaCapturada);
+           
         }
 
         public void realiza_jogada(Posicao origem, Posicao destino)
@@ -66,17 +73,48 @@ namespace xadrez
             else jogadoratual = Cor.Branco;
         }
 
+        public HashSet<Peca> pecasCapturadas(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+
+            foreach(Peca x in capturadas)
+            {
+                if(x.cor == cor) aux.Add(x);
+            }
+
+            return aux;
+        }
+
+        public HashSet<Peca> pecasEmjogo(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+
+            foreach (Peca x in pecas)
+            {
+                if (x.cor == cor) aux.Add(x);
+            }
+
+            aux.ExceptWith(pecasCapturadas(cor));
+            return aux;
+        }
+
+        public void colocar_nova_peca(int linha, char coluna, Peca peca)
+        {
+            tabuleiro.colocar_peca(peca, new PosicaoXadrez(linha,coluna).toPosicao());
+            pecas.Add(peca);
+        }
+
         private void colocar_pecas()
         {
-            tabuleiro.colocar_peca(new Torre(Cor.Branco, tabuleiro), new PosicaoXadrez(1,'a').toPosicao());
-            tabuleiro.colocar_peca(new Torre(Cor.Branco, tabuleiro), new PosicaoXadrez(1, 'h').toPosicao());
+            //Branco
+            colocar_nova_peca(1,'a',new Torre(Cor.Branco, tabuleiro));
+            colocar_nova_peca(5, 'd', new Torre(Cor.Branco, tabuleiro));
+            colocar_nova_peca(1, 'e', new Rei(Cor.Branco, tabuleiro));
 
-            tabuleiro.colocar_peca(new Rei(Cor.Branco, tabuleiro), new PosicaoXadrez(1, 'e').toPosicao());
-
-            tabuleiro.colocar_peca(new Torre(Cor.Preto, tabuleiro), new PosicaoXadrez(8, 'a').toPosicao());
-            tabuleiro.colocar_peca(new Torre(Cor.Preto, tabuleiro), new PosicaoXadrez(8, 'h').toPosicao());
-
-            tabuleiro.colocar_peca(new Rei(Cor.Preto, tabuleiro), new PosicaoXadrez(8, 'd').toPosicao());
+            //Preto
+            colocar_nova_peca(8, 'a', new Torre(Cor.Preto, tabuleiro));
+            colocar_nova_peca(8, 'h', new Torre(Cor.Preto, tabuleiro));
+            colocar_nova_peca(8, 'd', new Rei(Cor.Preto, tabuleiro));
 
         }
     }

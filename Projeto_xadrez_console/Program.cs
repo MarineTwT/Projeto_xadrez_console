@@ -16,13 +16,7 @@ namespace Projeto_xadrez_console
                     try
                     {
                         Console.Clear();
-                        Tela.print_tabuleiro(partida.tabuleiro);
-                        Console.WriteLine();
-                        Console.WriteLine("Turno: " + partida.turno);
-
-                        Console.WriteLine("Aguardando jogador da partida atual: " + partida.jogadoratual);
-
-
+                        Tela.imprimir_partida(partida);
                         Console.WriteLine();
                         Console.Write("Origem [coluna,linha -- a3]: ");
                         Posicao origem = Tela.ler_posicao_xadrez().toPosicao();
@@ -44,15 +38,15 @@ namespace Projeto_xadrez_console
                     catch (TabuleiroException e)
                     {
                         Console.WriteLine(e.Message);
+                        Console.ReadLine();
                     }
                 }
-                /*Console.Clear();
-                Tela.imprimirPartida(partida);*/
             }
 
             catch(TabuleiroException e)
             {
                 Console.WriteLine(e.Message);
+                Console.ReadLine();
             }
 
             Console.ReadLine();

@@ -1,5 +1,6 @@
 ﻿using tabuleiro;
 using xadrez;
+using System.Collections.Generic;
 
 namespace Projeto_xadrez_console
 {
@@ -17,6 +18,41 @@ namespace Projeto_xadrez_console
                 Console.WriteLine();
             }
             Console.WriteLine("  a b c d e f g h");
+        }
+
+        public static void imprimir_partida(PartidaXadrez partida)
+        {
+            print_tabuleiro(partida.tabuleiro);
+            Console.WriteLine();
+            imprimir__pecas_capturadas(partida);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + partida.turno);
+
+            Console.WriteLine("Aguardando jogador da partida atual: " + partida.jogadoratual);
+        }
+
+        public static void imprimir__pecas_capturadas(PartidaXadrez partida)
+        {
+            Console.WriteLine("Peças capturadas: ");
+            Console.Write("Brancas: ");
+            imprimir_conjunto(partida.pecasCapturadas(Cor.Branco));
+            Console.WriteLine();
+            Console.Write("Pretas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            imprimir_conjunto(partida.pecasCapturadas(Cor.Preto));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void imprimir_conjunto(HashSet<Peca> conjunto)
+        {
+            Console.Write("[");
+            foreach(Peca x in conjunto)
+            {
+                Console.Write(x + " ");
+            }
+            Console.Write("]");
         }
 
         public static void print_tabuleiro(Tabuleiro tabuleiro, bool[,] posicoesPossiveis)

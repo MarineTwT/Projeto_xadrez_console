@@ -144,6 +144,65 @@ namespace xadrez
                 throw new TabuleiroException("Você não pode se colocar em xeque!");
             }
 
+            Peca p = tabuleiro.peca(destino);
+            //#JE -- Promoção
+            if (p is Peao)
+            {
+                if ((p.cor == Cor.Branco && destino.linha == 0) || (p.cor == Cor.Preto && destino.linha == 7))
+                {
+                    Console.Write("\nQual peça vai querer virar? \n1 - Cavalo\n2 - Bispo\n3 - Torre\n4 - Dama\n-> ");
+                    int escolha = int.Parse(Console.ReadLine());
+
+                    switch (escolha)
+                    {
+                        case 1:
+                            p = tabuleiro.retirar_peca(destino);
+                            pecas.Remove(p);
+
+                            Peca cavalo = new Cavalo(p.cor, tabuleiro);
+                            tabuleiro.colocar_peca(cavalo, destino);
+                            pecas.Add(cavalo);
+                            break;
+
+                        case 2:
+                            p = tabuleiro.retirar_peca(destino);
+                            pecas.Remove(p);
+
+                            Peca bispo = new Bispo(p.cor, tabuleiro);
+                            tabuleiro.colocar_peca(bispo, destino);
+                            pecas.Add(bispo);
+                            break;
+
+                        case 3:
+                            p = tabuleiro.retirar_peca(destino);
+                            pecas.Remove(p);
+
+                            Peca torre = new Torre(p.cor, tabuleiro);
+                            tabuleiro.colocar_peca(torre, destino);
+                            pecas.Add(torre);
+                            break;
+
+                        case 4:
+                            p = tabuleiro.retirar_peca(destino);
+                            pecas.Remove(p);
+
+                            Peca dama = new Dama(p.cor, tabuleiro);
+                            tabuleiro.colocar_peca(dama, destino);
+                            pecas.Add(dama);
+                            break;
+
+                        default:
+                            p = tabuleiro.retirar_peca(destino);
+                            pecas.Remove(p);
+
+                            Peca dama1 = new Dama(p.cor, tabuleiro);
+                            tabuleiro.colocar_peca(dama1, destino);
+                            pecas.Add(dama1);
+                        break;
+                    }
+                }              
+            }
+
             if (esta_em_xeque(adversaria(jogadoratual))) xeque = true;           
             else xeque = false;
 
@@ -151,8 +210,6 @@ namespace xadrez
 
             turno++;
             mudar_jogador();
-
-            Peca p = tabuleiro.peca(destino);
 
             //#JE -- En Passant
             if(p is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2)) vulner_passant = p;        
@@ -315,7 +372,7 @@ namespace xadrez
             colocar_nova_peca(2, 'h', new Peao(Cor.Branco, tabuleiro, this));
 
             //Preto
-            colocar_nova_peca(8, 'a', new Torre(Cor.Preto, tabuleiro));
+           colocar_nova_peca(8, 'a', new Torre(Cor.Preto, tabuleiro));
             colocar_nova_peca(8, 'h', new Torre(Cor.Preto, tabuleiro));
 
             colocar_nova_peca(8, 'b', new Cavalo(Cor.Preto, tabuleiro));

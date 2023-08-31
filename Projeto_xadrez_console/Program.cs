@@ -40,6 +40,23 @@ namespace Projeto_xadrez_console
                         Console.WriteLine(e.Message);
                         Console.ReadLine();
                     }
+
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Formato errado de caracteres!!!!");
+                        Console.ReadLine();
+                    }
+
+                    catch (IndexOutOfRangeException)
+                    {
+                        Console.WriteLine("Não pode ser nulo, ou colocar um valor muito alto!!!");
+                        Console.ReadLine();
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Console.WriteLine("Não pode inserir valores estranho !?");
+                        Console.ReadLine();
+                    }
                 }
             }
 

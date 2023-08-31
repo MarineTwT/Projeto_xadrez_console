@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using tabuleiro;
+﻿using tabuleiro;
 
 namespace xadrez
 {
     internal class Peao : Peca
     {
-        public Peao(Cor cor, Tabuleiro tab) : base(cor, tab) { }
+        private PartidaXadrez partida;
+        public Peao(Cor cor, Tabuleiro tab, PartidaXadrez partida) : base(cor, tab) { this.partida = partida; }
 
         public override string ToString() { return "P"; }
 
@@ -55,6 +51,18 @@ namespace xadrez
                 {
                     mat[pos.linha, pos.coluna] = true;
                 }
+
+                //# JE -- En Passant
+                if (posicao.linha == 3)
+                {
+                    Posicao esquerda = new Posicao(posicao.linha, posicao.coluna - 1);
+                    Posicao direita = new Posicao(posicao.linha, posicao.coluna + 1);
+
+                    if(tabuleiro.posicao_valida(esquerda) && existe_inimigo(esquerda) && tabuleiro.peca(esquerda) == partida.vulner_passant)mat[esquerda.linha - 1,esquerda.coluna] = true;                   
+                    else if (tabuleiro.posicao_valida(direita) && existe_inimigo(direita) && tabuleiro.peca(direita) == partida.vulner_passant) mat[direita.linha - 1, direita.coluna] = true;
+                    
+                }
+
             }
 
             else
@@ -81,6 +89,17 @@ namespace xadrez
                 if (tabuleiro.posicao_valida(pos) && existe_inimigo(pos))
                 {
                     mat[pos.linha, pos.coluna] = true;
+                }
+
+                //# JE -- En Passant
+                if (posicao.linha == 4)
+                {
+                    Posicao esquerda = new Posicao(posicao.linha, posicao.coluna - 1);
+                    Posicao direita = new Posicao(posicao.linha, posicao.coluna + 1);
+
+                    if (tabuleiro.posicao_valida(esquerda) && existe_inimigo(esquerda) && tabuleiro.peca(esquerda) == partida.vulner_passant) mat[esquerda.linha + 1, esquerda.coluna] = true;
+                    else if (tabuleiro.posicao_valida(direita) && existe_inimigo(direita) && tabuleiro.peca(direita) == partida.vulner_passant) mat[direita.linha + 1, direita.coluna] = true;
+
                 }
             }
 

@@ -62,6 +62,8 @@ namespace xadrez
             if (esta_em_xeque(adversaria(jogadoratual))) xeque = true;           
             else xeque = false;
 
+            if (teste_xequemate(adversaria(jogadoratual))) terminada = true ;
+
             turno++;
             mudar_jogador();
         }
@@ -162,18 +164,87 @@ namespace xadrez
             pecas.Add(peca);
         }
 
+        public bool teste_xequemate(Cor cor)
+        {
+            if(!esta_em_xeque(cor))
+            {
+                return false;
+            }
+
+            foreach(Peca x in pecas_Em_jogo(cor))
+            {
+                bool[,] mat = x.mov_possivel();
+                for( int i = 0;i < x.tabuleiro.linhas; i++)
+                {
+                    for (int j = 0; j < x.tabuleiro.colunas; j++)
+                    {
+                        if (mat[i,j])
+                        {
+                            Posicao origem = x.posicao;
+                            Posicao destino = new Posicao(i, j);
+
+                            Peca pecacapturada = executar_movimento(origem,destino);
+                            bool testeXeque = esta_em_xeque(cor);
+                            desfaz_mov(origem,destino,pecacapturada);
+
+                            if(!testeXeque)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         private void colocar_pecas()
         {
             //Branco
             colocar_nova_peca(1,'a',new Torre(Cor.Branco, tabuleiro));
             colocar_nova_peca(1, 'h', new Torre(Cor.Branco, tabuleiro));
+
+            colocar_nova_peca(1, 'b', new Cavalo(Cor.Branco, tabuleiro));
+            colocar_nova_peca(1, 'g', new Cavalo(Cor.Branco, tabuleiro));
+
+            colocar_nova_peca(1, 'c', new Bispo(Cor.Branco, tabuleiro));
+            colocar_nova_peca(1, 'f', new Bispo(Cor.Branco, tabuleiro));
+
+            colocar_nova_peca(1, 'd', new Dama(Cor.Branco, tabuleiro));
             colocar_nova_peca(1, 'e', new Rei(Cor.Branco, tabuleiro));
+
+            //Peao
+            colocar_nova_peca(2, 'a', new Peao(Cor.Branco, tabuleiro));
+            colocar_nova_peca(2, 'b', new Peao(Cor.Branco, tabuleiro));
+            colocar_nova_peca(2, 'c', new Peao(Cor.Branco, tabuleiro));
+            colocar_nova_peca(2, 'd', new Peao(Cor.Branco, tabuleiro));
+            colocar_nova_peca(2, 'e', new Peao(Cor.Branco, tabuleiro));
+            colocar_nova_peca(2, 'f', new Peao(Cor.Branco, tabuleiro));
+            colocar_nova_peca(2, 'g', new Peao(Cor.Branco, tabuleiro));
+            colocar_nova_peca(2, 'h', new Peao(Cor.Branco, tabuleiro));
 
             //Preto
             colocar_nova_peca(8, 'a', new Torre(Cor.Preto, tabuleiro));
             colocar_nova_peca(8, 'h', new Torre(Cor.Preto, tabuleiro));
-            colocar_nova_peca(8, 'd', new Rei(Cor.Preto, tabuleiro));
 
+            colocar_nova_peca(8, 'b', new Cavalo(Cor.Preto, tabuleiro));
+            colocar_nova_peca(8, 'g', new Cavalo(Cor.Preto, tabuleiro));
+
+            colocar_nova_peca(8, 'c', new Bispo(Cor.Preto, tabuleiro));
+            colocar_nova_peca(8, 'f', new Bispo(Cor.Preto, tabuleiro));
+
+            colocar_nova_peca(8, 'd', new Dama(Cor.Preto, tabuleiro));
+            colocar_nova_peca(8, 'e', new Rei(Cor.Preto, tabuleiro));
+
+            //Peao
+            colocar_nova_peca(7, 'a', new Peao(Cor.Preto, tabuleiro));
+            colocar_nova_peca(7, 'b', new Peao(Cor.Preto, tabuleiro));
+            colocar_nova_peca(7, 'c', new Peao(Cor.Preto, tabuleiro));
+            colocar_nova_peca(7, 'd', new Peao(Cor.Preto, tabuleiro));
+            colocar_nova_peca(7, 'e', new Peao(Cor.Preto, tabuleiro));
+            colocar_nova_peca(7, 'f', new Peao(Cor.Preto, tabuleiro));
+            colocar_nova_peca(7, 'g', new Peao(Cor.Preto, tabuleiro));
+            colocar_nova_peca(7, 'h', new Peao(Cor.Preto, tabuleiro));
         }
     }
 }

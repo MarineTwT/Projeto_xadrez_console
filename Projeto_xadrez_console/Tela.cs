@@ -28,11 +28,21 @@ namespace Projeto_xadrez_console
             Console.WriteLine();
             Console.WriteLine("Turno: " + partida.turno);
 
-            Console.WriteLine("Aguardando jogador da partida atual: " + partida.jogadoratual);
-
-            if(partida.xeque)
+            if (!partida.terminada)
             {
-                Console.WriteLine("Xeque!!!!!");
+
+                Console.WriteLine("Aguardando jogador da partida atual: " + partida.jogadoratual);
+
+                if (partida.xeque)
+                {
+                    Console.WriteLine("Xeque!!!!!");
+                }
+            }
+
+            else
+            {
+                Console.WriteLine("XEQUEMATE!!!!!!!");
+                Console.WriteLine("Vencedor: " + partida.jogadoratual);
             }
         }
 

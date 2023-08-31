@@ -1,5 +1,4 @@
-﻿using System.Data;
-using tabuleiro;
+﻿using tabuleiro;
 
 namespace xadrez
 {
